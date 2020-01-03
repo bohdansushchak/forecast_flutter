@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
         body: SafeArea(
           child: Container(
             child:
-                Center(child: Text("Forecast flutter", style: TextStyles.logo)),
+                Center(child: Text("Forecast flutter", style: TextStyles.whiteBig)),
           ),
         ));
   }

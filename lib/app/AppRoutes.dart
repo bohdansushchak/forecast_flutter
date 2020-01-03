@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:forecast_flutter/ui/home/HomeScreen.dart';
-import 'package:forecast_flutter/ui/settings/SettingsScreen.dart';
-import 'package:forecast_flutter/ui/splash/SplashScreen.dart';
+import 'package:forecast_flutter/ui/screens/home/HomeScreen.dart';
+import 'package:forecast_flutter/ui/screens/settings/SettingsScreen.dart';
+import 'package:forecast_flutter/ui/screens/splash/SplashScreen.dart';
 
 class AppRoutes {
-
   static const String APP_ROUTE_HOME = "/home";
   static const String APP_ROUTE_SETTINGS = "/settings";
+  static const String APP_ROUTE_WEATHER_WEEK = "/wether_week";
 
   @override
   Route getRoutes(RouteSettings routeSettings) {
@@ -21,7 +21,7 @@ class AppRoutes {
         }
       default:
         {
-          return FadeRoute(page: SplashScreen(), settings: routeSettings);
+          return FadeRoute(page: HomeScreen(), settings: routeSettings);
         }
     }
   }
@@ -47,8 +47,8 @@ class FadeRoute extends PageRouteBuilder {
             Widget child,
           ) =>
               FadeTransition(
-                opacity: animation,
-                child: child,
-              ),
+            opacity: animation,
+            child: child,
+          ),
         );
 }
