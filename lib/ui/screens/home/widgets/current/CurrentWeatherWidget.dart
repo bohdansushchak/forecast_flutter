@@ -2,8 +2,9 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:forecast_flutter/models/CurrentWeatherModel.dart';
 import 'package:forecast_flutter/ui/screens/home/widgets/current/WeatherAssestControler.dart';
-import 'package:forecast_flutter/utils/config/Assets.dart';
+import 'package:forecast_flutter/utils/IconsHelper.dart';
 import 'package:forecast_flutter/utils/config/TextStyles.dart';
+import 'package:intl/intl.dart';
 
 class CurrentWeatherWidget extends StatelessWidget {
   CurrentWeatherModel weather;
@@ -16,7 +17,9 @@ class CurrentWeatherWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var current = weather.list.first;
     return Column(
+      mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         _buildGrayBox(
             child: Center(
@@ -31,29 +34,37 @@ class CurrentWeatherWidget extends StatelessWidget {
             children: <Widget>[
               Center(
                 child: Text(
-                  today,
+                  "$today - ${current.weather.first.main}",
                   style: TextStyles.tempMain,
                 ),
               ),
               Row(
+                mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Container(
                       width: 150,
                       height: 150,
                       child: FlareActor(
-                        _getWeatherAssetsPath(weather.list[0].weather.first),
+                        getWeatherAssetsPath(current.weather.first.icon),
                         alignment: Alignment.center,
                         fit: BoxFit.fill,
                         controller: _controler,
                       )),
                   Column(
-                    children: <Widget>[],
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(current.main.temp.toString()),
+                      Text(current.main.tempMax.toString()),
+                      Text(current.main.tempMin.toString())
+                    ],
                   )
                 ],
-              )
+              ),
             ],
           ),
         ),
+        _buildHoursWeather(weather.list)
       ],
     );
   }
@@ -72,46 +83,36 @@ class CurrentWeatherWidget extends StatelessWidget {
         ));
   }
 
-  String _getWeatherAssetsPath(Weather weather) {
-    switch (weather.icon) {
-      case '01d':
-        return WeatherAssets.SUNNY_DAY;
-        break;
-      case '01n':
-        return WeatherAssets.MOON_NOT;
-        break;
-      case '02d':
-      case '03d':
-      case '04d':
-        return WeatherAssets.CLOUDY_DAY;
-        break;
-      case '02n':
-      case '03n':
-      case '04n':
-        return WeatherAssets.CLOUDY_NIGHT;
-        break;
-      case '09d':
-      case '10d':
-        return WeatherAssets.HEAVY_RAINY_DAY;
-        break;
-      case '09n':
-      case '10n':
-        return WeatherAssets.HEAVY_RAINY_NIGHT;
-        break;
-      case '11d':
-        return WeatherAssets.THUNDER_RAINY_DAY;
-        break;
-      case '11n':
-        return WeatherAssets.THUNDER_RAINY_NIGHT;
-        break;
-      case '13d':
-      case '13n':
-        return WeatherAssets.SNOWY;
-        break;
-      case '50d':
-      case '50n':
-        return WeatherAssets.FOGGY_WEATHER;
-        break;
-    }
+  Widget _buildHoursWeather(List<ListWeather> list) {
+    var end = list.indexWhere((item) =>
+        new DateFormat("yyyy-MM-dd HH:mm:ss").parse(item.dtTxt).day >
+        DateTime.now().day);
+    List<ListWeather> newList = list.getRange(1, end).toList();
+    return Flexible(
+        child: ListView.builder(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      itemCount: newList.length,
+      itemBuilder: (BuildContext context, int idx) {
+        final item = newList[idx];
+        return _builsWeatherHourItem(item);
+      },
+    ));
+  }
+
+  Widget _builsWeatherHourItem(ListWeather item) {
+    var time = new DateFormat("yyyy-MM-dd HH:mm:ss").parse(item.dtTxt);
+    return _buildGrayBox(
+        margin: EdgeInsets.only(top: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Text(
+              "${time.day}:${time.hour}",
+              style: TextStyles.whiteMiddle,
+            ),
+            Text(item.weather.first.main, style: TextStyles.whiteMiddle),
+
+          ],
+        ));
   }
 }
