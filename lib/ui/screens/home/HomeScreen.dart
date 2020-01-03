@@ -65,7 +65,7 @@ class HomeScreen extends StatelessWidget {
     return SafeArea(
         child: CurrentWeatherWidget(
       weather: model.currentWeather,
-      city: "London",
+      today: model.today,
     ));
   }
 }

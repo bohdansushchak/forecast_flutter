@@ -37,6 +37,17 @@ flutter:
 
   assets:
     - assets/BackgroundSky.flr
+    - assets/cloudy-day.flr
+    - assets/cloudy-night.flr
+    - assets/foggy-weather.flr
+    - assets/heavy-rainy-day.flr
+    - assets/heavy-rainy-night.flr 
+    - assets/moon-not.flr
+    - assets/snowy.flr
+    - assets/sunny-day.flr
+    - assets/thunder-rainy-day.flr
+    - assets/thunder-rainy-night.flr
+    - assets/windy.flr
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
