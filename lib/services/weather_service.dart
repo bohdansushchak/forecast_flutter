@@ -1,7 +1,7 @@
-import 'package:forecast_flutter/models/CurrentWeatherModel.dart';
-import 'package:forecast_flutter/services/WeatherApiProvider.dart';
+import 'package:forecast_flutter/models/current_weather_model.dart';
+import 'package:forecast_flutter/services/weather_api_provider.dart';
 
-import 'StorageProvider.dart';
+import 'storage_provider.dart';
 
 class WeatherService {
   final WeatherApiProvider _apiProvider;

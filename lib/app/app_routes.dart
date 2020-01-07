@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:forecast_flutter/ui/screens/home/HomeScreen.dart';
-import 'package:forecast_flutter/ui/screens/settings/SettingsScreen.dart';
-import 'package:forecast_flutter/ui/screens/splash/SplashScreen.dart';
+import 'package:forecast_flutter/ui/screens/home/home_screen.dart';
+import 'package:forecast_flutter/ui/screens/settings/settings_screen.dart';
+import 'package:forecast_flutter/ui/screens/splash/splash_screen.dart';
 
 class AppRoutes {
   static const String APP_ROUTE_HOME = "/home";

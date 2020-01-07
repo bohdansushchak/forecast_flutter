@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:forecast_flutter/utils/config/AppColors.dart';
+import 'package:forecast_flutter/utils/config/app_colors.dart';
 
 abstract class TextStyles {
   static TextStyle whiteBig = TextStyle(fontSize: 28.0, fontWeight: FontWeight.normal, color: AppColors.white);

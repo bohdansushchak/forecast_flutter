@@ -1,4 +1,4 @@
-import 'package:forecast_flutter/enums/ViewState.dart';
+import 'package:forecast_flutter/enums/view_state.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class BaseModel extends Model {

@@ -1,4 +1,4 @@
-import 'package:forecast_flutter/utils/ValueHelper.dart';
+import 'package:forecast_flutter/utils/value_helper.dart';
 
 class CurrentWeatherModel {
   String cod;

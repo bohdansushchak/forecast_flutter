@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:forecast_flutter/models/CurrentWeatherModel.dart';
+import 'package:forecast_flutter/models/current_weather_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageProvider {

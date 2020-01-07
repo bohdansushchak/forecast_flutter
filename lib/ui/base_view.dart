@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:forecast_flutter/app/ServiceLocator.dart';
+import 'package:forecast_flutter/app/service_locator.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class BaseView<T extends Model> extends StatelessWidget {

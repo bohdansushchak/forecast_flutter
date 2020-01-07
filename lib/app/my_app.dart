@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'AppRoutes.dart';
+import 'app_routes.dart';
 
 class MyApp extends StatelessWidget {
   final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();

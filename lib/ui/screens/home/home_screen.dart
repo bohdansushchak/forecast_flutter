@@ -1,15 +1,15 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:forecast_flutter/app/AppRoutes.dart';
-import 'package:forecast_flutter/enums/ViewState.dart';
-import 'package:forecast_flutter/scoped_models/HomeModel.dart';
-import 'package:forecast_flutter/ui/screens/home/widgets/current/CurrentWeatherWidget.dart';
-import 'package:forecast_flutter/ui/widgets/BusyOverlay.dart';
-import 'package:forecast_flutter/utils/config/AppColors.dart';
+import 'package:forecast_flutter/app/app_routes.dart';
+import 'package:forecast_flutter/enums/view_state.dart';
+import 'package:forecast_flutter/scoped_models/home_model.dart';
+import 'package:forecast_flutter/ui/screens/home/widgets/current/current_weather_widget.dart';
+import 'package:forecast_flutter/ui/widgets/busy_overlay.dart';
+import 'package:forecast_flutter/utils/config/app_colors.dart';
 
-import '../../BaseView.dart';
-import 'BackgroundController.dart';
+import '../../base_view.dart';
+import 'background_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   final BackgroundContoller _backgroundController = BackgroundContoller();

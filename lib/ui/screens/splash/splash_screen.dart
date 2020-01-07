@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:forecast_flutter/app/AppRoutes.dart';
-import 'package:forecast_flutter/utils/config/AppColors.dart';
-import 'package:forecast_flutter/utils/config/TextStyles.dart';
+import 'package:forecast_flutter/app/app_routes.dart';
+import 'package:forecast_flutter/utils/config/app_colors.dart';
+import 'package:forecast_flutter/utils/config/text_styles.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

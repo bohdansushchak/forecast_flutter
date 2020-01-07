@@ -1,9 +1,9 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'package:forecast_flutter/models/CurrentWeatherModel.dart';
-import 'package:forecast_flutter/ui/screens/home/widgets/current/WeatherAssestControler.dart';
-import 'package:forecast_flutter/utils/IconsHelper.dart';
-import 'package:forecast_flutter/utils/config/TextStyles.dart';
+import 'package:forecast_flutter/models/current_weather_model.dart';
+import 'package:forecast_flutter/ui/screens/home/widgets/current/weather_assest_controler.dart';
+import 'package:forecast_flutter/utils/icons_helper.dart';
+import 'package:forecast_flutter/utils/config/text_styles.dart';
 import 'package:intl/intl.dart';
 
 class CurrentWeatherWidget extends StatelessWidget {

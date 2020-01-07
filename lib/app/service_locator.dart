@@ -1,7 +1,7 @@
-import 'package:forecast_flutter/scoped_models/HomeModel.dart';
-import 'package:forecast_flutter/services/StorageProvider.dart';
-import 'package:forecast_flutter/services/WeatherApiProvider.dart';
-import 'package:forecast_flutter/services/WeatherService.dart';
+import 'package:forecast_flutter/scoped_models/home_model.dart';
+import 'package:forecast_flutter/services/storage_provider.dart';
+import 'package:forecast_flutter/services/weather_api_provider.dart';
+import 'package:forecast_flutter/services/weather_service.dart';
 import 'package:get_it/get_it.dart';
 
 GetIt locator = GetIt.instance;

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:forecast_flutter/models/CurrentWeatherModel.dart';
+import 'package:forecast_flutter/models/current_weather_model.dart';
 import 'package:forecast_flutter/utils/Errors.dart';
 import 'package:http/http.dart' as http;
 
