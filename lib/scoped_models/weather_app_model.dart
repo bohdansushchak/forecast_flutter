@@ -22,7 +22,6 @@ class WeatherAppModel extends BaseModel {
 
   Future<void> initWeather() async {
     await updateCurrentWeather();
-    return Future.delayed(Duration(milliseconds: 5000));
   }
 
   BackgroundController get backgroundController => _backgroundController;

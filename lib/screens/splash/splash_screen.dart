@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:forecast_flutter/app/weather_app.dart';
-import 'package:forecast_flutter/config/app_colors.dart';
-import 'package:forecast_flutter/config/text_styles.dart';
 import 'package:forecast_flutter/scoped_models/weather_app_model.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -27,11 +25,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
       body: SafeArea(
         child: Container(
           child: Center(
-              child: Text("Forecast flutter", style: TextStyles.whiteBig)),
+              child: Text("Forecast flutter",)),
         ),
       ),
     );

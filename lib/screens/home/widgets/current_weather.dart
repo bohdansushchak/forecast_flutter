@@ -2,44 +2,37 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:forecast_flutter/config/text_styles.dart';
 import 'package:forecast_flutter/models/current_weather_model.dart';
+import 'package:forecast_flutter/scoped_models/weather_app_model.dart';
 import 'package:forecast_flutter/screens/home/widgets/weather_assest_controler.dart';
 import 'package:forecast_flutter/utils/icons_helper.dart';
+import 'package:forecast_flutter/widgets/gray_box.dart';
 import 'package:intl/intl.dart';
 
 class CurrentWeather extends StatelessWidget {
-  final CurrentWeatherModel weather;
-  final String today;
+  final WeatherAppModel model;
   final WeatherAssetsController _controller;
 
   CurrentWeather({
-    @required this.weather,
-    @required this.today,
+    @required this.model,
   }) : _controller = WeatherAssetsController();
 
   @override
   Widget build(BuildContext context) {
-    if(weather == null) {
+    print(model.currentWeather);
+    if (model.currentWeather == null) {
       return SizedBox();
     }
-    var current = weather.list.first;
+    var current = model.currentWeather.list.first;
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        _buildGrayBox(
-            child: Center(
-              child: Text(
-                weather.city.name,
-                style: TextStyles.whiteBig,
-              ),
-            ),
-            margin: EdgeInsets.only(bottom: 10, top: 10)),
-        _buildGrayBox(
+        GrayBox(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Center(
                 child: Text(
-                  "$today - ${current.weather.first.main}",
+                  "${model.today} - ${current.weather.first.main}",
                   style: TextStyles.tempMain,
                 ),
               ),
@@ -69,23 +62,9 @@ class CurrentWeather extends StatelessWidget {
             ],
           ),
         ),
-        _buildHoursWeather(weather.list)
+        _buildHoursWeather(model.currentWeather.list)
       ],
     );
-  }
-
-  Widget _buildGrayBox({Widget child, EdgeInsets margin}) {
-    return Container(
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        margin: margin,
-        color: Colors.transparent,
-        child: Container(
-          decoration: new BoxDecoration(
-              color: Colors.black38,
-              borderRadius: new BorderRadius.all(const Radius.circular(30.0))),
-          padding: EdgeInsets.all(5),
-          child: child,
-        ));
   }
 
   Widget _buildHoursWeather(List<ListWeather> list) {
@@ -95,7 +74,6 @@ class CurrentWeather extends StatelessWidget {
     List<ListWeather> newList = list.getRange(1, end).toList();
     return Flexible(
         child: ListView.builder(
-      padding: EdgeInsets.symmetric(horizontal: 15),
       itemCount: newList.length,
       itemBuilder: (BuildContext context, int idx) {
         final item = newList[idx];
@@ -106,7 +84,7 @@ class CurrentWeather extends StatelessWidget {
 
   Widget _buildWeatherHourItem(ListWeather item) {
     var time = new DateFormat("yyyy-MM-dd HH:mm:ss").parse(item.dtTxt);
-    return _buildGrayBox(
+    return GrayBox(
       margin: EdgeInsets.only(top: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

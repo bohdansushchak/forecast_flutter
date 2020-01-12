@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 final baseUrl = "http://api.openweathermap.org/data/2.5";
 final appId = "be0e24ada11785059ee8cc10881717ad";
 
+// http://api.openweathermap.org/data/2.5/forecast?q=London&APPID=be0e24ada11785059ee8cc10881717ad
+
 class WeatherApiProvider {
   final http.Client _client;
 

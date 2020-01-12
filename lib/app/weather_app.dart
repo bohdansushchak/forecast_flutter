@@ -35,13 +35,21 @@ class WeatherApp extends StatelessWidget {
 
 class AppRoutes {
   static const String APP_ROUTE_HOME = "/home";
-  static const String APP_ROUTE_SETTINGS = "/settings";
+  static const String APP_ROUTE_SPLASH = "/splash";
 
   Route getRoutes({
     @required RouteSettings routeSettings,
     @required WeatherAppModel model,
   }) {
     switch (routeSettings.name) {
+      case APP_ROUTE_SPLASH:
+        {
+          return FadeRoute(
+            page: SplashScreen(
+              model: model,
+            ),
+          );
+        }
       case APP_ROUTE_HOME:
         {
           return FadeRoute(
