@@ -5,6 +5,7 @@ import 'package:forecast_flutter/models/current_weather_model.dart';
 import 'package:forecast_flutter/scoped_models/weather_app_model.dart';
 import 'package:forecast_flutter/screens/home/widgets/weather_assest_controler.dart';
 import 'package:forecast_flutter/utils/icons_helper.dart';
+import 'package:forecast_flutter/utils/metric_helper.dart';
 import 'package:forecast_flutter/widgets/gray_box.dart';
 import 'package:intl/intl.dart';
 
@@ -18,28 +19,30 @@ class CurrentWeather extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(model.currentWeather);
     if (model.currentWeather == null) {
       return SizedBox();
     }
     var current = model.currentWeather.list.first;
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        GrayBox(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Center(
-                child: Text(
-                  "${model.today} - ${current.weather.first.main}",
-                  style: TextStyles.tempMain,
+    return SafeArea(
+      top: false,
+      bottom: false,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          GrayBox(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Center(
+                  child: Text(
+                    "${model.today} - ${current.weather.first.main}",
+                    style: TextStyles.tempMain,
+                  ),
                 ),
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Container(
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Container(
                       width: 150,
                       height: 150,
                       child: FlareActor(
@@ -47,53 +50,79 @@ class CurrentWeather extends StatelessWidget {
                         alignment: Alignment.center,
                         fit: BoxFit.fill,
                         controller: _controller,
-                      )),
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text(current.main.temp.toString()),
-                      Text(current.main.tempMax.toString()),
-                      Text(current.main.tempMin.toString())
-                    ],
-                  )
-                ],
-              ),
-            ],
+                      ),
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          current.main.temp.floor().toString() +
+                              MetricHelper.getTempMetric(
+                                  model.settings.metricSystem),
+                          style: TextStyles.currentTempMain,
+                        ),
+                        Text(
+                          current.main.tempMax.floor().toString() +
+                              MetricHelper.getTempMetric(
+                                  model.settings.metricSystem),
+                        ),
+                        Text(
+                          current.main.tempMin.floor().toString() +
+                              MetricHelper.getTempMetric(
+                                  model.settings.metricSystem),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-        _buildHoursWeather(model.currentWeather.list)
-      ],
+          WeatherByHour(list: model.currentWeather.list),
+        ],
+      ),
     );
   }
+}
 
-  Widget _buildHoursWeather(List<ListWeather> list) {
-    var end = list.indexWhere((item) =>
-        new DateFormat("yyyy-MM-dd HH:mm:ss").parse(item.dtTxt).day >
-        DateTime.now().day);
-    List<ListWeather> newList = list.getRange(1, end).toList();
+class WeatherByHour extends StatelessWidget {
+  final List<ListWeather> list;
+
+  WeatherByHour({@required List<ListWeather> list})
+      : this.list =
+            list.length > 5 ? list.getRange(1, 6).toList() : list.toList();
+
+  @override
+  Widget build(BuildContext context) {
     return Flexible(
-        child: ListView.builder(
-      itemCount: newList.length,
-      itemBuilder: (BuildContext context, int idx) {
-        final item = newList[idx];
-        return _buildWeatherHourItem(item);
-      },
-    ));
+      child: ListView.builder(
+        itemCount: list.length,
+        itemBuilder: (BuildContext context, int idx) =>
+            WeatherHourItem(weather: list[idx]),
+      ),
+    );
   }
+}
 
-  Widget _buildWeatherHourItem(ListWeather item) {
-    var time = new DateFormat("yyyy-MM-dd HH:mm:ss").parse(item.dtTxt);
+class WeatherHourItem extends StatelessWidget {
+  final ListWeather weather;
+
+  WeatherHourItem({@required this.weather});
+
+  @override
+  Widget build(BuildContext context) {
+    var time = new DateFormat("yyyy-MM-dd HH:mm:ss").parse(weather.dtTxt);
     return GrayBox(
       margin: EdgeInsets.only(top: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Text(
-            "${time.day}:${time.hour}",
+            "${time.hour}:${time.minute}",
             style: TextStyles.whiteMiddle,
           ),
-          Text(item.weather.first.main, style: TextStyles.whiteMiddle),
+          Text(weather.weather.first.main, style: TextStyles.whiteMiddle),
         ],
       ),
     );

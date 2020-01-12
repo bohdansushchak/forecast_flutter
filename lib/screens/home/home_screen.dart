@@ -13,17 +13,38 @@ import 'package:forecast_flutter/screens/home/widgets/settings.dart';
 import 'package:forecast_flutter/screens/home/widgets/wethear_week.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class HomeScreen extends StatefulWidget {
+const int CURRENT_WEATHER = 0;
+const int WEEK_WEATHER = 1;
+const int SETTINGS = 2;
+
+class HomeScreen extends StatelessWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  Widget build(BuildContext context) {
+    return ScopedModel<WeatherAppModel>(
+      model: locator<WeatherAppModel>(),
+      child: ScopedModelDescendant<WeatherAppModel>(
+        builder: (context, child, model) => HomeContent(model: model),
+      ),
+    );
+  }
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class HomeContent extends StatefulWidget {
+  final WeatherAppModel model;
+
+  HomeContent({@required this.model});
+
+  @override
+  _HomeContentState createState() => _HomeContentState();
+}
+
+class _HomeContentState extends State<HomeContent> {
   final PageController pageController;
 
-  int currentPage = 0;
+  int currentPage = 1;
 
-  _HomeScreenState() : pageController = PageController(initialPage: 0);
+  _HomeContentState()
+      : pageController = PageController(initialPage: CURRENT_WEATHER);
 
   @override
   void initState() {
@@ -37,57 +58,50 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModel<WeatherAppModel>(
-      model: locator<WeatherAppModel>(),
-      child: ScopedModelDescendant<WeatherAppModel>(
-        builder: (BuildContext context, Widget child, WeatherAppModel model) =>
-            Scaffold(
-          backgroundColor: AppColors.white,
-          floatingActionButton: Fab(
-            onCurrentPressed: () => _changePage(0),
-            onListPressed: () => _changePage(1),
-            onSettingsPressed: () => _changePage(2),
-          ),
-          body: Container(
-            child: Stack(
-              children: [
-                Container(
-                  constraints: BoxConstraints.expand(),
-                  child: FlareActor(
-                    Assets.backgroundSky,
-                    alignment: Alignment.center,
-                    fit: BoxFit.fill,
-                    controller: model.backgroundController,
+    var model = widget.model;
+    return Scaffold(
+      floatingActionButton: Fab(
+        onCurrentPressed: () => _changePage(0),
+        onListPressed: () => _changePage(1),
+        onSettingsPressed: () => _changePage(2),
+      ),
+      body: Container(
+        child: Stack(
+          children: [
+            Container(
+              constraints: BoxConstraints.expand(),
+              child: FlareActor(
+                Assets.backgroundSky,
+                alignment: Alignment.center,
+                fit: BoxFit.fill,
+                controller: model.backgroundController,
+              ),
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                AppBar(text: getAppBarTitle()),
+                Expanded(
+                  child: SafeArea(
+                    top: false,
+                    child:
+                        PageView(controller: pageController, children: <Widget>[
+                      CurrentWeather(model: model),
+                      WeatherWeek(model: model),
+                      Settings(model: model),
+                    ]),
                   ),
-                ),
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    AppBar(text: getAppBarTitle()),
-                    Expanded(
-                      child: SafeArea(
-                        top: false,
-                        child: PageView(
-                            controller: pageController,
-                            children: <Widget>[
-                              CurrentWeather(model: model),
-                              WeatherWeek(model: model),
-                              Settings(model: model),
-                            ]),
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),
-          ),
+          ],
         ),
       ),
     );
   }
 
   String getAppBarTitle() {
-    if (currentPage == 2) {
+    if (currentPage == SETTINGS) {
       return FlutterI18n.translate(context, Strings.appBarSettings);
     }
     return "London";

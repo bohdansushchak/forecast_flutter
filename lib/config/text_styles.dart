@@ -12,6 +12,12 @@ abstract class TextStyles {
     color: AppColors.white,
   );
 
+  static TextStyle currentTempMain = _defaultFont.copyWith(
+    fontSize: 56.0,
+    fontWeight: FontWeight.normal,
+    color: AppColors.white,
+  );
+
   static TextStyle whiteBig = _defaultFont.copyWith(
     fontSize: 28.0,
     fontWeight: FontWeight.normal,

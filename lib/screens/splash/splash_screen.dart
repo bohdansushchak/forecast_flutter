@@ -26,8 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return ScopedModel<WeatherAppModel>(
       model: model,
       child: ScopedModelDescendant<WeatherAppModel>(
-        builder: (context, child, model) {
-          return Scaffold(
+        builder: (context, child, model) => Scaffold(
             body: SafeArea(
               child: Container(
                 child: Center(
@@ -37,8 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ),
             ),
-          );
-        },
+          ),
       ),
     );
   }
