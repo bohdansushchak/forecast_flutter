@@ -18,6 +18,7 @@ dependencies:
   flutter_speed_dial: ^1.2.5
   intl: ^0.16.0
   google_fonts: ^0.3.2
+  flutter_i18n: ^0.8.3
 
   cupertino_icons: ^0.1.2
 
@@ -30,6 +31,7 @@ flutter:
 
   assets:
     - assets/
+    - assets/locales/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

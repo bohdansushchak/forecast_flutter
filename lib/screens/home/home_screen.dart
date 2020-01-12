@@ -1,21 +1,19 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:forecast_flutter/app/service_locator.dart';
 import 'package:forecast_flutter/config/app_colors.dart';
 import 'package:forecast_flutter/config/assets.dart';
+import 'package:forecast_flutter/config/strings.dart';
 import 'package:forecast_flutter/config/text_styles.dart';
 import 'package:forecast_flutter/scoped_models/weather_app_model.dart';
 import 'package:forecast_flutter/screens/home/widgets/current_weather.dart';
 import 'package:forecast_flutter/screens/home/widgets/settings.dart';
 import 'package:forecast_flutter/screens/home/widgets/wethear_week.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class HomeScreen extends StatefulWidget {
-  final WeatherAppModel model;
-
-  HomeScreen({
-    @required this.model,
-  });
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -39,53 +37,60 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var model = widget.model;
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      floatingActionButton: Fab(
-        onCurrentPressed: () => _changePage(0),
-        onListPressed: () => _changePage(1),
-        onSettingsPressed: () => _changePage(2),
-      ),
-      body: Container(
-        child: Stack(
-          children: [
-            Container(
-              constraints: BoxConstraints.expand(),
-              child: FlareActor(
-                Assets.backgroundSky,
-                alignment: Alignment.center,
-                fit: BoxFit.fill,
-                controller: model.backgroundController,
-              ),
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                AppBar(
-                  text: "London",
-                ),
-                Expanded(
-                  child: SafeArea(
-                    top: false,
-                    child:
-                        PageView(controller: pageController, children: <Widget>[
-                      CurrentWeather(
-                        model: model,
-                      ),
-                      WeatherWeek(),
-                      Settings(
-                        model: model,
-                      ),
-                    ]),
+    return ScopedModel<WeatherAppModel>(
+      model: locator<WeatherAppModel>(),
+      child: ScopedModelDescendant<WeatherAppModel>(
+        builder: (BuildContext context, Widget child, WeatherAppModel model) =>
+            Scaffold(
+          backgroundColor: AppColors.white,
+          floatingActionButton: Fab(
+            onCurrentPressed: () => _changePage(0),
+            onListPressed: () => _changePage(1),
+            onSettingsPressed: () => _changePage(2),
+          ),
+          body: Container(
+            child: Stack(
+              children: [
+                Container(
+                  constraints: BoxConstraints.expand(),
+                  child: FlareActor(
+                    Assets.backgroundSky,
+                    alignment: Alignment.center,
+                    fit: BoxFit.fill,
+                    controller: model.backgroundController,
                   ),
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    AppBar(text: getAppBarTitle()),
+                    Expanded(
+                      child: SafeArea(
+                        top: false,
+                        child: PageView(
+                            controller: pageController,
+                            children: <Widget>[
+                              CurrentWeather(model: model),
+                              WeatherWeek(model: model),
+                              Settings(model: model),
+                            ]),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );
+  }
+
+  String getAppBarTitle() {
+    if (currentPage == 2) {
+      return FlutterI18n.translate(context, Strings.appBarSettings);
+    }
+    return "London";
   }
 
   void _changePage(int newPage) {
@@ -123,7 +128,7 @@ class AppBar extends StatelessWidget {
           child: Center(
             child: Text(
               text,
-              style: TextStyles.whiteBig,
+              style: TextStyles.appBarTitle,
             ),
           ),
         ),

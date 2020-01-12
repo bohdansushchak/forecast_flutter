@@ -6,6 +6,12 @@ import 'app_colors.dart';
 abstract class TextStyles {
   static TextStyle _defaultFont = GoogleFonts.baloo();
 
+  static TextStyle appBarTitle = _defaultFont.copyWith(
+    fontSize: 28.0,
+    fontWeight: FontWeight.normal,
+    color: AppColors.white,
+  );
+
   static TextStyle whiteBig = _defaultFont.copyWith(
     fontSize: 28.0,
     fontWeight: FontWeight.normal,

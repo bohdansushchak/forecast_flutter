@@ -14,5 +14,5 @@ void setupLocator() {
       apiProvider: locator<WeatherApiProvider>(),
       storageProvider: locator<StorageProvider>()));
 
-  locator.registerFactory<WeatherAppModel>(() => WeatherAppModel());
+  locator.registerLazySingleton<WeatherAppModel>(() => WeatherAppModel());
 }

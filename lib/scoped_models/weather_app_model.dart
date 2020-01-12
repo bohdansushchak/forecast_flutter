@@ -14,9 +14,13 @@ class WeatherAppModel extends BaseModel {
   CurrentWeatherModel currentWeather;
   String today = DateFormat('EEEE').format(DateTime.now());
 
+  WeatherAppModel() {
+   // initWeather();
+  }
   Future<CurrentWeatherModel> updateCurrentWeather() async {
     setState(ViewState.Busy);
     currentWeather = await _weatherService.getCurrentWeatherByCity('London');
+    print('updateCurrentWeather');
     setState(ViewState.Retrived);
   }
 
