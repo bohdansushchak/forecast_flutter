@@ -7,13 +7,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:forecast_flutter/app/my_app.dart';
+import 'package:forecast_flutter/app/weather_app.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+    await tester.pumpWidget(WeatherApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

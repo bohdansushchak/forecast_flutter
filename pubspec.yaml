@@ -9,22 +9,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
 
-  # scoped model
   scoped_model: ^1.0.1
-  # dependency injection
   get_it: ^3.1.0
-  # http client
   http: ^0.12.0+3
-  # flare animations
   flare_flutter: ^1.8.3
-  # shared preferences
   shared_preferences: ^0.5.6
-  # speed dial fab
   flutter_speed_dial: ^1.2.5
-  # date
   intl: ^0.16.0
+  google_fonts: ^0.3.2
 
   cupertino_icons: ^0.1.2
 
@@ -36,18 +29,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/BackgroundSky.flr
-    - assets/cloudy-day.flr
-    - assets/cloudy-night.flr
-    - assets/foggy-weather.flr
-    - assets/heavy-rainy-day.flr
-    - assets/heavy-rainy-night.flr 
-    - assets/moon-not.flr
-    - assets/snowy.flr
-    - assets/sunny-day.flr
-    - assets/thunder-rainy-day.flr
-    - assets/thunder-rainy-night.flr
-    - assets/windy.flr
+    - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

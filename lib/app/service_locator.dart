@@ -1,4 +1,4 @@
-import 'package:forecast_flutter/scoped_models/home_model.dart';
+import 'package:forecast_flutter/scoped_models/weather_app_model.dart';
 import 'package:forecast_flutter/services/storage_provider.dart';
 import 'package:forecast_flutter/services/weather_api_provider.dart';
 import 'package:forecast_flutter/services/weather_service.dart';
@@ -14,5 +14,5 @@ void setupLocator() {
       apiProvider: locator<WeatherApiProvider>(),
       storageProvider: locator<StorageProvider>()));
 
-  locator.registerFactory<HomeModel>(() => HomeModel());
+  locator.registerFactory<WeatherAppModel>(() => WeatherAppModel());
 }

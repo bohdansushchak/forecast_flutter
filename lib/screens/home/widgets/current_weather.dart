@@ -1,19 +1,20 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:forecast_flutter/config/text_styles.dart';
 import 'package:forecast_flutter/models/current_weather_model.dart';
-import 'package:forecast_flutter/ui/screens/home/widgets/current/weather_assest_controler.dart';
+import 'package:forecast_flutter/screens/home/widgets/weather_assest_controler.dart';
 import 'package:forecast_flutter/utils/icons_helper.dart';
-import 'package:forecast_flutter/utils/config/text_styles.dart';
 import 'package:intl/intl.dart';
 
-class CurrentWeatherWidget extends StatelessWidget {
-  CurrentWeatherModel weather;
-  String today;
-  WeatherAssetsControler _controler;
+class CurrentWeather extends StatelessWidget {
+  final CurrentWeatherModel weather;
+  final String today;
+  final WeatherAssetsController _controller;
 
-  CurrentWeatherWidget({@required this.weather, @required this.today}) {
-    _controler = WeatherAssetsControler();
-  }
+  CurrentWeather({
+    @required this.weather,
+    @required this.today,
+  }) : _controller = WeatherAssetsController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class CurrentWeatherWidget extends StatelessWidget {
                         getWeatherAssetsPath(current.weather.first.icon),
                         alignment: Alignment.center,
                         fit: BoxFit.fill,
-                        controller: _controler,
+                        controller: _controller,
                       )),
                   Column(
                     mainAxisSize: MainAxisSize.max,
@@ -94,25 +95,25 @@ class CurrentWeatherWidget extends StatelessWidget {
       itemCount: newList.length,
       itemBuilder: (BuildContext context, int idx) {
         final item = newList[idx];
-        return _builsWeatherHourItem(item);
+        return _buildWeatherHourItem(item);
       },
     ));
   }
 
-  Widget _builsWeatherHourItem(ListWeather item) {
+  Widget _buildWeatherHourItem(ListWeather item) {
     var time = new DateFormat("yyyy-MM-dd HH:mm:ss").parse(item.dtTxt);
     return _buildGrayBox(
-        margin: EdgeInsets.only(top: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Text(
-              "${time.day}:${time.hour}",
-              style: TextStyles.whiteMiddle,
-            ),
-            Text(item.weather.first.main, style: TextStyles.whiteMiddle),
-
-          ],
-        ));
+      margin: EdgeInsets.only(top: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Text(
+            "${time.day}:${time.hour}",
+            style: TextStyles.whiteMiddle,
+          ),
+          Text(item.weather.first.main, style: TextStyles.whiteMiddle),
+        ],
+      ),
+    );
   }
 }

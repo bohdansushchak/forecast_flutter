@@ -1,12 +1,12 @@
 import 'package:forecast_flutter/app/service_locator.dart';
-import 'package:forecast_flutter/enums/view_state.dart';
+import 'package:forecast_flutter/utils/view_state.dart';
 import 'package:forecast_flutter/models/current_weather_model.dart';
 import 'package:forecast_flutter/services/weather_service.dart';
 import 'package:intl/intl.dart';
 
 import 'base_model.dart';
 
-class HomeModel extends BaseModel {
+class WeatherAppModel extends BaseModel {
   final WeatherService _weatherService = locator<WeatherService>();
 
   CurrentWeatherModel currentWeather;
