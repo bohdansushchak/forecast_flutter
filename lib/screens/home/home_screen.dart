@@ -5,53 +5,103 @@ import 'package:forecast_flutter/config/app_colors.dart';
 import 'package:forecast_flutter/config/assets.dart';
 import 'package:forecast_flutter/scoped_models/weather_app_model.dart';
 import 'package:forecast_flutter/screens/home/widgets/current_weather.dart';
-import 'package:forecast_flutter/utils/view_state.dart';
-import 'package:forecast_flutter/widgets/busy_overlay.dart';
+import 'package:forecast_flutter/screens/home/widgets/settings.dart';
+import 'package:forecast_flutter/screens/home/widgets/wethear_week.dart';
 
-import 'background_controller.dart';
-
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final WeatherAppModel model;
-  final BackgroundController _backgroundController = BackgroundController();
 
   HomeScreen({
     @required this.model,
   });
 
   @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final PageController pageController;
+
+  int currentPage = 0;
+
+  _HomeScreenState() : pageController = PageController(initialPage: 0);
+
+  @override
+  void initState() {
+    super.initState();
+    pageController.addListener(() {
+      setState(() {
+        currentPage = pageController.page.floor();
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BusyOverlay(
-      show: model.state == ViewState.Busy,
-      child: Scaffold(
-        backgroundColor: AppColors.white,
-        floatingActionButton: Fab(),
-        body: Stack(
+    var model = widget.model;
+    return Scaffold(
+      backgroundColor: AppColors.white,
+      floatingActionButton: Fab(
+        onCurrentPressed: () => _changePage(0),
+        onListPressed: () => _changePage(1),
+        onSettingsPressed: () => _changePage(2),
+      ),
+      body: Container(
+        child: Stack(
           children: [
             Container(
-                constraints: BoxConstraints.expand(),
-                child: FlareActor(
-                  Assets.backgroundSky,
-                  alignment: Alignment.center,
-                  fit: BoxFit.fill,
-                  controller: _backgroundController,
-                )),
-            _buildContent(model)
+              constraints: BoxConstraints.expand(),
+              child: FlareActor(
+                Assets.backgroundSky,
+                alignment: Alignment.center,
+                fit: BoxFit.fill,
+                controller: model.backgroundController,
+              ),
+            ),
+            SafeArea(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  AppBar(
+                    text: "London",
+                  ),
+                  Expanded(
+                    child: PageView(controller: pageController, children: <Widget>[
+                      CurrentWeather(
+                        weather: model.currentWeather,
+                        today: model.today,
+                      ),
+                      WeatherWeek(),
+                      Settings(
+                        model: model,
+                      ),
+                    ]),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildContent(WeatherAppModel model) {
-    if (model.currentWeather == null) {
-      return SizedBox();
+  void _changePage(int newPage) {
+    if (newPage != currentPage) {
+      pageController.animateToPage(newPage,
+          duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
     }
-    return SafeArea(
-      child: CurrentWeather(
-        weather: model.currentWeather,
-        today: model.today,
-      ),
-    );
+  }
+}
+
+class AppBar extends StatelessWidget {
+  final String text;
+
+  AppBar({@required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text);
   }
 }
 

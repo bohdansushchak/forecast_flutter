@@ -1,12 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:forecast_flutter/scoped_models/weather_app_model.dart';
 import 'package:forecast_flutter/screens/base_view.dart';
 import 'package:forecast_flutter/screens/home/home_screen.dart';
-import 'package:forecast_flutter/screens/settings/settings_screen.dart';
+import 'package:forecast_flutter/screens/splash/splash_screen.dart';
 
 class WeatherApp extends StatelessWidget {
   final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+
+  WeatherApp() {
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,22 +45,20 @@ class AppRoutes {
       case APP_ROUTE_HOME:
         {
           return FadeRoute(
-              page: HomeScreen(
-                model: model,
-              ),
-              settings: routeSettings);
-        }
-      case APP_ROUTE_SETTINGS:
-        {
-          return FadeRoute(page: SettingsScreen(), settings: routeSettings);
+            page: HomeScreen(
+              model: model,
+            ),
+            settings: routeSettings,
+          );
         }
       default:
         {
           return FadeRoute(
-              page: HomeScreen(
-                model: model,
-              ),
-              settings: routeSettings);
+            page: SplashScreen(
+              model: model,
+            ),
+            settings: routeSettings,
+          );
         }
     }
   }

@@ -18,16 +18,20 @@ class CurrentWeather extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(weather == null) {
+      return SizedBox();
+    }
     var current = weather.list.first;
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         _buildGrayBox(
             child: Center(
-                child: Text(
-              weather.city.name,
-              style: TextStyles.whiteBig,
-            )),
+              child: Text(
+                weather.city.name,
+                style: TextStyles.whiteBig,
+              ),
+            ),
             margin: EdgeInsets.only(bottom: 10, top: 10)),
         _buildGrayBox(
           child: Column(
