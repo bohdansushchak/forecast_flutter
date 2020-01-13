@@ -1,5 +1,9 @@
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:forecast_flutter/config/app_colors.dart';
+import 'package:forecast_flutter/config/strings.dart';
 import 'package:forecast_flutter/config/text_styles.dart';
 import 'package:forecast_flutter/models/current_weather_model.dart';
 import 'package:forecast_flutter/scoped_models/weather_app_model.dart';
@@ -30,6 +34,7 @@ class CurrentWeather extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           GrayBox(
+            margin: EdgeInsets.only(top: 25, bottom: 15),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
@@ -79,9 +84,70 @@ class CurrentWeather extends StatelessWidget {
               ],
             ),
           ),
+          WeatherStats(weather: current),
           WeatherByHour(list: model.currentWeather.list),
         ],
       ),
+    );
+  }
+}
+
+class WeatherStats extends StatelessWidget {
+  ListWeather weather;
+
+  WeatherStats({@required this.weather});
+
+  @override
+  Widget build(BuildContext context) {
+    return GrayBox(
+      margin: EdgeInsets.only(bottom: 15),
+      padding: EdgeInsets.all(15.0),
+      child: Table(children: [
+        TableRow(children: [
+          StatsItem(
+            label: FlutterI18n.translate(context, Strings.pressure),
+            value: "${weather.main.pressure.floor()}hPa",
+          ),
+          StatsItem(
+            label: FlutterI18n.translate(context, Strings.humidity),
+            value: "${weather.main.humidity.floor()}%",
+          ),
+          StatsItem(
+            label: FlutterI18n.translate(context, Strings.wind),
+            value: weather.wind.speed.toString(),
+          ),
+        ]),
+        //TableRow(children: []),
+      ]),
+    );
+  }
+}
+
+class StatsItem extends StatelessWidget {
+  final String label;
+  final String value;
+
+  StatsItem({@required this.label, @required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Container(
+          width: 80,
+          height: 80,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              border: Border.all(width: 1, color: AppColors.black)),
+          child: Center(
+            child: Text(value),
+          ),
+        ),
+        Text(
+          label,
+          style: TextStyles.weatherStatLabel,
+        )
+      ],
     );
   }
 }

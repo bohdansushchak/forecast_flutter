@@ -35,4 +35,10 @@ abstract class TextStyles {
     fontWeight: FontWeight.bold,
     color: AppColors.white,
   );
+
+  static TextStyle weatherStatLabel = _defaultFont.copyWith(
+    fontSize: 14,
+    fontWeight: FontWeight.normal,
+    color: AppColors.white,
+  );
 }

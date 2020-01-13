@@ -1,4 +1,7 @@
 {
   "app_name": "Forecast flutter",
-  "app_bar_settings": "Settings"
+  "app_bar_settings": "Settings",
+  "pressure": "Pressure",
+  "humidity": "Humidity",
+  "wind": "Wind"
 }
