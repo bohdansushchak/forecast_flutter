@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forecast_flutter/config/app_colors.dart';
 
 class GrayBox extends StatelessWidget {
   final Widget child;
@@ -19,14 +20,13 @@ class GrayBox extends StatelessWidget {
       color: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.black38,
+          color: AppColors.blueDarker.withOpacity(0.4),
           borderRadius: BorderRadius.all(
             Radius.circular(30.0),
           ),
-        ),
-        padding: padding,
-        child: child,
       ),
-    );
+      padding: padding,
+      child: child,
+    ),);
   }
 }

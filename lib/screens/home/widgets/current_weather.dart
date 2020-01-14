@@ -1,3 +1,4 @@
+import 'package:charts_flutter/flutter.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -85,6 +86,7 @@ class CurrentWeather extends StatelessWidget {
             ),
           ),
           WeatherStats(weather: current),
+          WeatherCharsByHour(list: model.currentWeather.list),
           WeatherByHour(list: model.currentWeather.list),
         ],
       ),
@@ -137,8 +139,10 @@ class StatsItem extends StatelessWidget {
           width: 80,
           height: 80,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              border: Border.all(width: 1, color: AppColors.black)),
+            borderRadius: BorderRadius.circular(50),
+            border: Border.all(
+                width: 1, color: AppColors.blueLight.withOpacity(0.6)),
+          ),
           child: Center(
             child: Text(value),
           ),
@@ -193,4 +197,47 @@ class WeatherHourItem extends StatelessWidget {
       ),
     );
   }
+}
+
+class WeatherCharsByHour extends StatelessWidget {
+  final List<ListWeather> list;
+
+  WeatherCharsByHour({@required this.list});
+
+  @override
+  Widget build(BuildContext context) {
+    final data = [
+      new LinearSales(0, 5),
+      new LinearSales(1, 25),
+      new LinearSales(2, 100),
+      new LinearSales(3, 75),
+    ];
+
+    var series = [
+      Series<ListWeather, int>(
+        id: 'Sales',
+        colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
+        domainFn: (ListWeather sales, i) => i,
+        measureFn: (ListWeather sales, _) => sales.main.temp,
+        data: list,
+      )
+    ];
+
+    return Container(
+      height: 230,
+      child: GrayBox(
+        child: LineChart(
+          series,
+          animate: false,
+        ),
+      ),
+    );
+  }
+}
+
+class LinearSales {
+  final int year;
+  final int sales;
+
+  LinearSales(this.year, this.sales);
 }
